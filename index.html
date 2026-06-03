@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SI & Diligence Track — Progress Report | KD → Hardik | 3 Jun 2026</title>
+<style>
+  :root { color-scheme: light; }
+  @page { size: A4; margin: 8mm; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #fafbfc; color: #1a1f26; font-family: 'Inter', -apple-system, system-ui, sans-serif; font-size: 9.2px; line-height: 1.35; }
+  .page { width: 100%; max-width: 1100px; margin: 0 auto; padding: 12px 18px; }
+
+  /* Header */
+  .hdr { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 2px solid #0d9488; padding-bottom: 5px; margin-bottom: 7px; }
+  .hdr h1 { font-size: 15px; font-weight: 800; letter-spacing: -0.2px; color: #0a0f15; }
+  .hdr h1 span { color: #0d9488; }
+  .hdr .meta { text-align: right; font-size: 8.5px; color: #5a6573; }
+  .hdr .meta b { color: #1a1f26; }
+
+  /* Executive Summary */
+  .exec { background: #ffffff; border: 1px solid #e0e6ed; border-left: 3px solid #0d9488; border-radius: 4px; padding: 7px 10px; margin-bottom: 7px; }
+  .exec .label { font-size: 7.8px; font-weight: 800; color: #0d9488; text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 3px; }
+  .exec .body { font-size: 9.3px; color: #2a3441; }
+  .exec .body b { color: #0a0f15; }
+
+  /* North Star strip */
+  .ns { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-bottom: 8px; }
+  .ns .box { background: #ffffff; border: 1px solid #e0e6ed; border-radius: 4px; padding: 6px 8px; }
+  .ns .box .k { font-size: 7.5px; font-weight: 700; color: #5a6573; text-transform: uppercase; letter-spacing: 0.5px; }
+  .ns .box .v { font-size: 11px; font-weight: 800; color: #0a0f15; margin-top: 2px; }
+  .ns .box .v small { font-size: 8px; font-weight: 600; color: #0d9488; }
+
+  /* Section titles */
+  h2 { font-size: 9.8px; font-weight: 800; color: #0a0f15; text-transform: uppercase; letter-spacing: 0.7px; margin: 8px 0 5px 0; padding-bottom: 2px; border-bottom: 1px solid #d8dee5; display: flex; align-items: center; gap: 6px; }
+  h2 .pill { background: #0d9488; color: #fff; font-size: 7.5px; padding: 1px 6px; border-radius: 8px; font-weight: 800; letter-spacing: 0; }
+
+  /* Client matrix */
+  .matrix { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
+  .client { background: #ffffff; border: 1px solid #e0e6ed; border-radius: 4px; padding: 5px 7px; min-height: 70px; }
+  .client .name { font-size: 9.5px; font-weight: 800; color: #0a0f15; margin-bottom: 2px; display: flex; justify-content: space-between; align-items: center; }
+  .stamp { font-size: 6.8px; padding: 1px 5px; border-radius: 6px; font-weight: 800; letter-spacing: 0.3px; text-transform: uppercase; }
+  .stamp.hot { background: #d1fae5; color: #047857; border: 1px solid #6ee7b7; }
+  .stamp.warm { background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; }
+  .stamp.cold { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
+  .stamp.live { background: #dbeafe; color: #1e40af; border: 1px solid #93c5fd; }
+  .client .when { font-size: 8.2px; color: #0d9488; font-weight: 700; margin-bottom: 2px; }
+  .client .next { font-size: 8px; color: #2a3441; }
+  .client .next b { color: #0a0f15; }
+
+  /* Timeline */
+  .tl { background: #ffffff; border: 1px solid #e0e6ed; border-radius: 4px; padding: 8px 10px; }
+  .tl-grid { display: grid; grid-template-columns: 90px repeat(4, 1fr); gap: 0; }
+  .tl-hdr { font-size: 7.5px; font-weight: 800; color: #0d9488; text-transform: uppercase; letter-spacing: 0.5px; text-align: center; padding: 3px 0; border-bottom: 1px solid #d8dee5; }
+  .tl-hdr.first { text-align: left; color: #5a6573; }
+  .tl-row { display: grid; grid-template-columns: 90px repeat(4, 1fr); border-top: 1px solid #f0f3f7; min-height: 22px; }
+  .tl-track { font-size: 8.5px; font-weight: 700; color: #0a0f15; padding: 4px 6px 4px 2px; display: flex; align-items: center; }
+  .tl-cell { padding: 3px 4px; border-left: 1px solid #f0f3f7; position: relative; }
+  .chip { display: inline-block; font-size: 7.3px; font-weight: 700; padding: 1.5px 5px; border-radius: 8px; margin: 1px 1px; line-height: 1.2; }
+  .chip.demo { background: #dbeafe; color: #1e40af; }
+  .chip.pkb { background: #ede9fe; color: #5b21b6; }
+  .chip.ux { background: #fef3c7; color: #92400e; }
+  .chip.pilot { background: #d1fae5; color: #047857; }
+  .chip.milestone { background: #0d9488; color: #fff; }
+
+  /* Four Tracks */
+  .tracks { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+  .track { background: #ffffff; border: 1px solid #e0e6ed; border-radius: 4px; padding: 6px 8px; }
+  .track .th { font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 4px; padding-bottom: 3px; border-bottom: 1px solid #e0e6ed; }
+  .track.t1 .th { color: #1e40af; }
+  .track.t2 .th { color: #5b21b6; }
+  .track.t3 .th { color: #92400e; }
+  .track.t4 .th { color: #047857; }
+  .track ul { list-style: none; padding: 0; }
+  .track li { font-size: 8.2px; color: #2a3441; padding-left: 8px; position: relative; margin-bottom: 3px; line-height: 1.35; }
+  .track li::before { content: "■"; position: absolute; left: 0; font-size: 5px; top: 4px; }
+  .track.t1 li::before { color: #1e40af; }
+  .track.t2 li::before { color: #5b21b6; }
+  .track.t3 li::before { color: #92400e; }
+  .track.t4 li::before { color: #047857; }
+  .track li b { color: #0a0f15; font-weight: 700; }
+  .track li.due { color: #0a0f15; font-weight: 600; }
+
+  /* Asks */
+  .asks { background: #ecfdf5; border: 1px solid #6ee7b7; border-left: 3px solid #0d9488; border-radius: 4px; padding: 6px 10px; margin-top: 7px; }
+  .asks .label { color: #047857; font-size: 8.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 3px; }
+  .asks ol { padding-left: 16px; }
+  .asks li { font-size: 8.6px; color: #0a0f15; margin-bottom: 1px; }
+  .asks li b { color: #047857; }
+
+  .footer { margin-top: 7px; font-size: 7.3px; color: #8a95a4; text-align: center; border-top: 1px solid #e0e6ed; padding-top: 4px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="hdr">
+    <h1>Sponsorship Intelligence & Diligence — <span>Progress Report</span></h1>
+    <div class="meta"><b>KD → Hardik</b> · Since 13 May · As of 3 Jun 2026</div>
+  </div>
+
+  <!-- EXECUTIVE SUMMARY -->
+  <div class="exec">
+    <div class="label">Executive Summary</div>
+    <div class="body">Three high-intent demos land in 8 days — <b>Range (4 Jun)</b>, <b>NY Red Bulls (8 Jun)</b>, <b>CAA (11 Jun)</b>. <b>MLBPI is the closest enterprise pilot</b> on the board; KD follow-up tomorrow. <b>PKB architecture freezes Friday 5 Jun</b> with RP + Venkatesh — pushing into dev as I transition engineers in. Same day I shift to <b>UI/UX</b>; pilot timeline holds. <b>LinkedIn cold outreach + Bicycle lead-gen via Proximity tenant</b> open the top of funnel from next week.</div>
+  </div>
+
+  <!-- NORTH STAR -->
+  <div class="ns">
+    <div class="box"><div class="k">North star · 4 weeks</div><div class="v">1 pilot live <small>+ 2 backlog leads</small></div></div>
+    <div class="box"><div class="k">Closest to go-live</div><div class="v">MLBPI <small>· enterprise pace</small></div></div>
+    <div class="box"><div class="k">Bicycle grounding</div><div class="v">99% <small>· production-grade</small></div></div>
+  </div>
+
+  <!-- CLIENT MATRIX -->
+  <h2>Client Tracker <span class="pill">8 accounts</span></h2>
+  <div class="matrix">
+
+    <div class="client">
+      <div class="name">CAA <span class="stamp live">Demo 11 Jun</span></div>
+      <div class="when">Thu 11 Jun · solutions team</div>
+      <div class="next">Josh confirmed. Prep: A's + AmEx tightened, workflow gaps as anchor.</div>
+    </div>
+
+    <div class="client">
+      <div class="name">MLBPI <span class="stamp hot">Closest to GL</span></div>
+      <div class="when">F/U Wed 4 Jun (KD)</div>
+      <div class="next"><b>Closest enterprise pilot</b>. $3K, public-data, brand whitespace + inventory match.</div>
+    </div>
+
+    <div class="client">
+      <div class="name">Bay FC <span class="stamp warm">F/U pending</span></div>
+      <div class="when">F/U Wed 4 Jun (KD)</div>
+      <div class="next">Diagnose hook: 20-min workflow audit; digital/social whitespace.</div>
+    </div>
+
+    <div class="client">
+      <div class="name">Spurs <span class="stamp cold">On hold</span></div>
+      <div class="when">Post-playoffs trigger</div>
+      <div class="next">Re-engage when SAS exits. Pre-draft note ready.</div>
+    </div>
+
+    <div class="client">
+      <div class="name">NY Red Bulls <span class="stamp live">Demo 8 Jun</span></div>
+      <div class="when">Mon 8 Jun · Nick + Vamsi</div>
+      <div class="next">Tenant live · 99% grounding · jersey patch use case. Demo-ready.</div>
+    </div>
+
+    <div class="client">
+      <div class="name">Range Sports <span class="stamp live">Demo 4 Jun</span></div>
+      <div class="when">Wed 4 Jun · multi-property</div>
+      <div class="next">Snow League / Pacers / Fever. Agency exposure = downstream lead flow.</div>
+    </div>
+
+    <div class="client">
+      <div class="name">FSM <span class="stamp cold">Soft pass</span></div>
+      <div class="when">F/U ~17 Jun (2 weeks)</div>
+      <div class="next">Ship Branden 1-pager: ONE emerging category for Red Sox, public signal only.</div>
+    </div>
+
+    <div class="client">
+      <div class="name">AEG <span class="stamp warm">WIP</span></div>
+      <div class="when">Active scheduling</div>
+      <div class="next">Pivot to Heather/Hillary; Crypto.com Arena + LA Live demo focus.</div>
+    </div>
+  </div>
+
+  <!-- TIMELINE -->
+  <h2>Timeline <span class="pill">3 Jun → 30 Jun</span></h2>
+  <div class="tl">
+    <div class="tl-grid">
+      <div class="tl-hdr first">Track</div>
+      <div class="tl-hdr">W1 · 3–7 Jun</div>
+      <div class="tl-hdr">W2 · 8–14 Jun</div>
+      <div class="tl-hdr">W3 · 15–21 Jun</div>
+      <div class="tl-hdr">W4 · 22–30 Jun</div>
+    </div>
+    <div class="tl-row">
+      <div class="tl-track">Demos</div>
+      <div class="tl-cell"><span class="chip demo">Range 4 Jun</span></div>
+      <div class="tl-cell"><span class="chip demo">NY RB 8 Jun</span><span class="chip demo">CAA 11 Jun</span></div>
+      <div class="tl-cell"><span class="chip demo">AEG demo</span><span class="chip demo">FSM 1-pager</span></div>
+      <div class="tl-cell"><span class="chip demo">2 new agency demos</span></div>
+    </div>
+    <div class="tl-row">
+      <div class="tl-track">PKB Dev</div>
+      <div class="tl-cell"><span class="chip milestone">Arch freeze · Fri 5 Jun</span></div>
+      <div class="tl-cell"><span class="chip pkb">Engineer transition</span><span class="chip pkb">DB schema</span></div>
+      <div class="tl-cell"><span class="chip pkb">First 2 connectors live</span></div>
+      <div class="tl-cell"><span class="chip pkb">Pipeline → Bicycle</span></div>
+    </div>
+    <div class="tl-row">
+      <div class="tl-track">UI / UX</div>
+      <div class="tl-cell"><span class="chip ux">KD shift · Fri 5 Jun</span></div>
+      <div class="tl-cell"><span class="chip ux">SI MVP wireframes</span></div>
+      <div class="tl-cell"><span class="chip ux">Pilot-ready flows</span></div>
+      <div class="tl-cell"><span class="chip ux">Polish + handoff</span></div>
+    </div>
+    <div class="tl-row">
+      <div class="tl-track">Pilot Readiness</div>
+      <div class="tl-cell"><span class="chip pilot">MLBPI F/U</span><span class="chip pilot">LinkedIn plan</span></div>
+      <div class="tl-cell"><span class="chip pilot">$3K SOW</span><span class="chip pilot">ToFu outreach live</span></div>
+      <div class="tl-cell"><span class="chip pilot">Contract close push</span></div>
+      <div class="tl-cell"><span class="chip milestone">Pilot signed</span></div>
+    </div>
+  </div>
+
+  <!-- FOUR TRACKS -->
+  <h2>Four-Track Plan <span class="pill">what gets done</span></h2>
+  <div class="tracks">
+
+    <div class="track t1">
+      <div class="th">Demos</div>
+      <ul>
+        <li class="due"><b>Range — 4 Jun</b> · multi-property</li>
+        <li class="due"><b>NY Red Bulls — 8 Jun</b> · jersey patch</li>
+        <li class="due"><b>CAA — 11 Jun</b> · solutions team</li>
+        <li><b>MLBPI / Bay FC</b> F/U 4 Jun</li>
+        <li><b>FSM</b> nurture 1-pager (~17 Jun)</li>
+        <li><b>AEG</b> direct ping → Heather/Hillary</li>
+        <li><b>Spurs</b> post-playoffs trigger</li>
+      </ul>
+    </div>
+
+    <div class="track t2">
+      <div class="th">PKB Development</div>
+      <ul>
+        <li class="due"><b>Arch freeze · Fri 5 Jun</b></li>
+        <li>Sources · connectors · DB choice (Postgres / Snowflake) · schema</li>
+        <li><b>w/ RP + Venkatesh</b> as the push team</li>
+        <li>KD transitions engineers in parallel</li>
+        <li>First 2 connectors live → Bicycle by W3</li>
+        <li>Karan's PKB doc = baseline</li>
+      </ul>
+    </div>
+
+    <div class="track t3">
+      <div class="th">UI / UX</div>
+      <ul>
+        <li class="due"><b>KD shifts in · Fri 5 Jun</b></li>
+        <li>Runs parallel — does <b>not</b> hinder pilot go-live</li>
+        <li>SI MVP wireframes → flows by W2</li>
+        <li>Pilot-ready surfaces by W3</li>
+        <li>Polish + dev handoff in W4</li>
+      </ul>
+    </div>
+
+    <div class="track t4">
+      <div class="th">Pilot Readiness</div>
+      <ul>
+        <li><b>MLBPI</b> = primary pilot lane ($3K, public data)</li>
+        <li>SOW drafted W2 → close push W3 → signed W4</li>
+        <li><b>Bicycle lead-gen</b> via Proximity tenant — surface leagues + stakeholders</li>
+        <li><b>LinkedIn cold outreach</b> — warm, founder-friendly, exec reach-outs from next week</li>
+        <li>SI wedge + MVP definition locked end of next week</li>
+        <li>Competitor matrix: SponsorUnited, <b>Elevate</b>, Helix, Cred</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ASKS -->
+  <div class="asks">
+    <div class="label">⚡ Asks of Hardik</div>
+    <ol>
+      <li><b>Fundraising criteria</b> — what defines "ready" so I can reverse-engineer the next 4 weeks.</li>
+      <li><b>Vet SI USP / wedge</b> with me end of next week — once comp research + customer-interview synthesis is locked.</li>
+    </ol>
+  </div>
+
+  <div class="footer">KD · Sponsorship Intelligence & Diligence Track · Single-page progress report · 3 Jun 2026</div>
+</div>
+</body>
+</html>
