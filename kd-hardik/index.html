@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>KD ↔ Hardik · Chat & Task Tracker</title>
+<style>
+  :root { color-scheme: light; }
+  @page { size: A4; margin: 8mm; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #fafbfc; color: #1a1f26; font-family: 'Inter', -apple-system, system-ui, sans-serif; font-size: 9.4px; line-height: 1.4; }
+  .page { width: 100%; max-width: 1100px; margin: 0 auto; padding: 14px 18px; }
+
+  /* Header */
+  .hdr { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 2px solid #0d9488; padding-bottom: 5px; margin-bottom: 8px; }
+  .hdr h1 { font-size: 16px; font-weight: 800; letter-spacing: -0.2px; color: #0a0f15; }
+  .hdr h1 span { color: #0d9488; }
+  .hdr .meta { text-align: right; font-size: 8.5px; color: #5a6573; }
+  .hdr .meta b { color: #1a1f26; }
+
+  /* Pinned Hardik tasks */
+  .pin { background: #fff7ed; border: 1px solid #fdba74; border-left: 3px solid #ea580c; border-radius: 4px; padding: 8px 12px; margin-bottom: 10px; }
+  .pin .label { font-size: 8px; font-weight: 800; color: #c2410c; text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 4px; }
+  .pin .sub { font-size: 8.5px; color: #7c2d12; margin-bottom: 5px; }
+  .pin ol { padding-left: 18px; }
+  .pin li { font-size: 9.3px; color: #1a1f26; margin-bottom: 2px; }
+  .pin li b { color: #0a0f15; }
+
+  /* Chat cards */
+  .chats { display: flex; flex-direction: column; gap: 9px; }
+  .chat { background: #ffffff; border: 1px solid #e0e6ed; border-radius: 5px; padding: 10px 12px; }
+  .chat .top { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid #e0e6ed; padding-bottom: 5px; margin-bottom: 7px; }
+  .chat .date { font-size: 11px; font-weight: 800; color: #0d9488; letter-spacing: -0.2px; }
+  .chat .date .small { font-size: 8.5px; color: #5a6573; font-weight: 600; margin-left: 6px; }
+  .chat .topic { font-size: 9px; font-weight: 700; color: #2a3441; text-transform: uppercase; letter-spacing: 0.4px; }
+
+  .chat h3 { font-size: 8px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; color: #5a6573; margin: 6px 0 3px 0; }
+
+  .decisions { background: #f8fafc; border-left: 2px solid #94a3b8; padding: 5px 8px; border-radius: 3px; margin-bottom: 6px; }
+  .decisions ul { list-style: none; padding: 0; }
+  .decisions li { font-size: 9px; color: #1a1f26; padding-left: 10px; position: relative; margin-bottom: 2px; }
+  .decisions li::before { content: "→"; position: absolute; left: 0; color: #64748b; font-weight: 700; }
+
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .side { background: #f9fafb; border-radius: 3px; padding: 6px 8px; }
+  .side.kd { border-left: 3px solid #0d9488; }
+  .side.hardik { border-left: 3px solid #ea580c; background: #fff7ed; }
+  .side .who { font-size: 8.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+  .side.kd .who { color: #0d9488; }
+  .side.hardik .who { color: #c2410c; }
+  .side ul { list-style: none; padding: 0; }
+  .side li { font-size: 8.8px; color: #1a1f26; padding-left: 10px; position: relative; margin-bottom: 3px; line-height: 1.35; }
+  .side li::before { content: "▪"; position: absolute; left: 0; font-size: 8px; top: 2px; }
+  .side.kd li::before { color: #0d9488; }
+  .side.hardik li::before { color: #ea580c; }
+  .side li b { color: #0a0f15; font-weight: 700; }
+
+  .badge { display: inline-block; font-size: 6.8px; font-weight: 800; padding: 1px 5px; border-radius: 6px; margin-left: 4px; text-transform: uppercase; letter-spacing: 0.3px; vertical-align: middle; }
+  .badge.done { background: #d1fae5; color: #047857; border: 1px solid #6ee7b7; }
+  .badge.open { background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; }
+  .badge.ip { background: #dbeafe; color: #1e40af; border: 1px solid #93c5fd; }
+  .badge.due { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
+
+  .note { margin-top: 10px; background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 4px; padding: 6px 10px; }
+  .note .label { font-size: 8px; font-weight: 800; color: #475569; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 3px; }
+  .note .body { font-size: 8.5px; color: #334155; }
+  .note .body b { color: #0a0f15; }
+
+  .footer { margin-top: 10px; font-size: 7.5px; color: #8a95a4; text-align: center; border-top: 1px solid #e0e6ed; padding-top: 5px; }
+  .footer a { color: #0d9488; text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="hdr">
+    <h1>KD ↔ Hardik · <span>Chat & Task Tracker</span></h1>
+    <div class="meta"><b>Source:</b> Granola only · <b>Updated:</b> 4 Jun 2026</div>
+  </div>
+
+  <!-- PINNED OPEN HARDIK TASKS -->
+  <div class="pin">
+    <div class="label">⚡ Open Hardik tasks — share-back list</div>
+    <div class="sub">What Hardik owns / committed to, still open. Lift-and-send.</div>
+    <ol>
+      <li><b>Work with community test advisor</b> on fundraising materials & process — from 29 May.</li>
+      <li><b>Lock dry-run cadence with KD</b> before every final demo call — first test = NY Red Bulls Mon 8 Jun.</li>
+      <li><b>Lead investor conversations</b> (warm intros + cold outbound) — his 90-day plan, ongoing.</li>
+    </ol>
+  </div>
+
+  <!-- CHATS -->
+  <div class="chats">
+
+    <!-- CHAT 1 -->
+    <div class="chat">
+      <div class="top">
+        <div class="date">14 May 2026 <span class="small">· In-person</span></div>
+        <div class="topic">Role restructuring · SI commitment · runway</div>
+      </div>
+
+      <h3>Decisions</h3>
+      <div class="decisions">
+        <ul>
+          <li>KD exits all other ops → singular ownership of paid SI customers</li>
+          <li>All customer-facing work stays with Hardik (credibility)</li>
+          <li>Reports reviewed by KD before delivery</li>
+          <li>Cash runway: end of June 2026</li>
+        </ul>
+      </div>
+
+      <div class="split">
+        <div class="side kd">
+          <div class="who">KD task</div>
+          <ul>
+            <li>Written response on role restructuring <span class="badge done">Done</span></li>
+            <li>Ensure OP handles JHS + Zeeshan in person during KD travel <span class="badge done">Done</span></li>
+          </ul>
+        </div>
+        <div class="side hardik">
+          <div class="who">Hardik task</div>
+          <ul>
+            <li>Loop Bhaskar in on Bicycle integration issues <span class="badge done">Done</span> <small>(25 May call landed)</small></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHAT 2 -->
+    <div class="chat">
+      <div class="top">
+        <div class="date">29 May 2026 <span class="small">· In-person</span></div>
+        <div class="topic">90-day fundraising focus · monetisation · outreach reframe</div>
+      </div>
+
+      <h3>Decisions</h3>
+      <div class="decisions">
+        <ul>
+          <li>Hardik 90-day focus: 200 investor first-meetings</li>
+          <li>KD 0–10 on SI · 60-day monetisation target with $ figures</li>
+          <li>MLBPI: stop Chris, target BI teams → escalate to commercial heads</li>
+          <li>Shift outreach: feature → business outcomes</li>
+          <li>Explore consulting + platform hybrid · dogfood SI for Proximity</li>
+        </ul>
+      </div>
+
+      <div class="split">
+        <div class="side kd">
+          <div class="who">KD task</div>
+          <ul>
+            <li>60-day monetisation plan with $ figures <span class="badge open">Open</span></li>
+            <li>99% time on SI · 12+ hrs/day <span class="badge ip">In prog</span></li>
+            <li>Analyse all prospect transcripts for signals + hesitations <span class="badge ip">In prog</span></li>
+            <li>Competitor research (Sponsor Flow + similar) <span class="badge ip">In prog</span></li>
+            <li>Reframe outreach emails — "why you need us" + quantifiable outcomes <span class="badge ip">In prog</span></li>
+            <li>Range Sports: connect w/ BI + solutions analysts pre-call <span class="badge done">Done</span></li>
+          </ul>
+        </div>
+        <div class="side hardik">
+          <div class="who">Hardik task</div>
+          <ul>
+            <li>Lead investor conversations (warm + cold) <span class="badge ip">In prog</span> <small>(90-day plan)</small></li>
+            <li>Work with community test advisor on fundraising materials <span class="badge open">Open</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHAT 3 -->
+    <div class="chat">
+      <div class="top">
+        <div class="date">3 June 2026</div>
+        <div class="topic">Demo prep · PKB scope · outreach · pricing</div>
+      </div>
+
+      <h3>Decisions</h3>
+      <div class="decisions">
+        <ul>
+          <li>Range Sports demo Fri 5 Jun · CAA Tue (after NY RB Mon 8 Jun)</li>
+          <li>PKB heavy build deferred until pilot commit · v0.1 = demo dataset only · battle-test w/ Claude</li>
+          <li>Data pack setup must automate (KD 2 days/client = opp-cost)</li>
+          <li>Applied AI engineer needed; no incremental cost yet</li>
+          <li>PKB not built on Bicycle UI — separate orchestration layer later</li>
+          <li>80/20 rev share w/ partner · paid pilots only · revisit at 5–6 customers</li>
+          <li>LinkedIn leader-to-leader outreach 20–25/day from next week</li>
+        </ul>
+      </div>
+
+      <div class="split">
+        <div class="side kd">
+          <div class="who">KD task</div>
+          <ul>
+            <li>MLBPI + DFC follow-up emails <span class="badge due">Due today</span></li>
+            <li>Freeze PKB data architecture w/ RP <span class="badge due">Due today</span></li>
+            <li>Standardise data schemas across all demos <span class="badge open">Open</span></li>
+            <li>LinkedIn outreach pipeline (leader-to-leader) <span class="badge open">Next week</span></li>
+            <li>UX/UI work post-demo <span class="badge open">W1–W2</span></li>
+            <li>Orchestration layer vs Bicycle setup — bring a view back <span class="badge open">Open</span></li>
+            <li>Scope all work to 60-day dollar-commit deadline <span class="badge ip">Ongoing</span></li>
+          </ul>
+        </div>
+        <div class="side hardik">
+          <div class="who">Hardik task</div>
+          <ul>
+            <li>Share pricing models w/ partner ($3–5K/mo agents → ~$20K MRR/deployment) <span class="badge done">Done</span></li>
+            <li>Confirm 80/20 rev share + paid-pilots-only policy <span class="badge done">Done</span></li>
+            <li>Ensure dry runs happen with KD before final demo calls <span class="badge open">Open</span> <small>(NY RB = first test)</small></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NOTES -->
+  <div class="note">
+    <div class="label">⚠ Two unresolved data points</div>
+    <div class="body">
+      <b>1.</b> Granola records Range Sports demo as <b>Fri 5 Jun</b> (per 3 Jun chat). Earlier in conversation KD said tomorrow = 4 Jun. Confirm which date.<br>
+      <b>2.</b> Granola Chat 3 mentions <b>DFC</b> in F/U list — not in the SI tracker. Clarify identity (separate account, or shorthand for an existing one).
+    </div>
+  </div>
+
+  <div class="footer">KD ↔ Hardik tracker · Granola-sourced · updated 4 Jun 2026 · <a href="../">main SI report ↗</a></div>
+</div>
+</body>
+</html>
